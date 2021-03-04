@@ -10,6 +10,7 @@ import com.railways.registration.utils.CustomHash;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -29,6 +30,7 @@ public class RegisterServiceIMPL implements RegisterService {
         BeanUtils.copyProperties(requestDTO,userDetails);
         userRepository.save(userDetails);
         String sha256hex = CustomHash.hashString(requestDTO.getPassword());
+        //String sha256hex = new BCryptPasswordEncoder().encode(requestDTO.getPassword());
         LoginRequestDTO loginRequestDTO = new LoginRequestDTO();
         loginRequestDTO.setUserName(requestDTO.getUserName());
         loginRequestDTO.setPassword(sha256hex);
