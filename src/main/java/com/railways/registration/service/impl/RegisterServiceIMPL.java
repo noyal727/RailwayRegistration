@@ -30,6 +30,7 @@ public class RegisterServiceIMPL implements RegisterService {
         BeanUtils.copyProperties(requestDTO,userDetails);
         userRepository.save(userDetails);
         String sha256hex = CustomHash.hashString(requestDTO.getPassword());
+        sha256hex = CustomHash.hashString(sha256hex);
         //String sha256hex = new BCryptPasswordEncoder().encode(requestDTO.getPassword());
         LoginRequestDTO loginRequestDTO = new LoginRequestDTO();
         loginRequestDTO.setUserName(requestDTO.getUserName());
